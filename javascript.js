@@ -6,43 +6,58 @@ let displayValue = ''
 let state = false
 
 buttons.addEventListener('click', (e) => {
+  let newText = e.target.innerText;
+  let lastChar = displayValue[displayValue.length - 1]
 
-  if (state === false && !isNaN(Number(e.target.innerText)))  {
-    displayValue += e.target.innerText
+
+  if (state === false && !isNaN(Number(newText)))  {
+    displayValue += newText
     display.value = displayValue
     state = false
+  }
+
+  else if (['+', '-', '*', '/'].includes(lastChar) &&
+    ['+', '-', '*', '/'].includes(newText)) {
+    displayValue = String(displayValue.slice(0, displayValue.length - 1)) + newText
+    display.value = displayValue
   }
 
   else if (
-    !isNaN(Number(displayValue[displayValue.length - 1])) &&
-    (e.target.innerText === '+' ||
-     e.target.innerText === '-' ||
-     e.target.innerText === '*' ||
-     e.target.innerText === '/')) {
-    displayValue += e.target.innerText
+    !isNaN(Number(lastChar)) &&
+      ( newText === '+' ||
+        newText === '-' ||
+        newText === '*' ||
+        newText === '/')) {
+    displayValue += newText
     display.value = displayValue
     state = false
   }
 
-  else if (e.target.innerText === 'AC') {
+  else if (newText === 'AC') {
     displayValue = ''
     display.value = displayValue
     state = false
   }
 
   else if (
-    !isNaN(Number(displayValue[displayValue.length - 1]))
-    && e.target.innerText === '=') {
+    !isNaN(Number(lastChar)) && newText === '=') {
     displayValue = String(eval(displayValue))
     display.value = displayValue
     state = true
     }
 
-  else if (state === true && !isNaN(Number(e.target.innerText))) {
-  displayValue = '' + e.target.innerText
+  else if (['+', '-', '*', '/'].includes(lastChar) && newText === '=') {
+    displayValue = String(eval(displayValue.slice(0, displayValue.length - 1)))
+    display.value = displayValue
+    state = true
+  }
+
+  else if (state === true && !isNaN(Number(newText))) {
+  displayValue = '' + newText
   display.value = displayValue
     state = false
   }
+
 })
 
 
