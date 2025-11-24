@@ -7,10 +7,10 @@ body {
   background-color: #CFE9F1;
 }
 
-input:focus {
-  outline: none;
-  box-shadow: none;
-}
+/*input:focus {*/
+/*  outline: none;*/
+/*  box-shadow: none;*/
+/*}*/
 
 input {
   font-size: 68px;
@@ -22,7 +22,12 @@ input {
   border-radius: 30px;
   background-color: rgb(138, 154, 139);
   border: solid 6px coral;
+  margin-bottom: 20px;
+  position: relative;
+  outline: #8f827e solid 1px;
+  outline-offset: -7px;
 }
+
 
 .calculator-container {
   height: 70vh;
@@ -30,7 +35,7 @@ input {
   border-radius: 35px;
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
-  grid-template-rows: repeat(5, 20%);
+  grid-template-rows:  28% 18% 18% 18% 18%;
   background-color: coral;
   border: solid 6px #c8dfe7;
   box-shadow: -6px -6px 25px rgba(229, 210, 228, 0.5),
@@ -63,7 +68,7 @@ button {
   border-radius: 20px;
   font-weight: 600;
   background-color: coral;
-  margin: 12px;
+  margin: 10px;
   box-shadow:
     -6px -6px 10px rgba(250, 250, 250, 0.15),
     4px 4px 9px rgba(0, 0, 0, 0.14);
