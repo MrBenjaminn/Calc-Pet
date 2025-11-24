@@ -1,12 +1,35 @@
-//Калькулятор логика
-
-let buttons = document.querySelector('[data-js-container]')
-let display = document.querySelector('[data-js-display]')
+const buttons = document.querySelector('[data-js-container]')
+const display = document.querySelector('[data-js-display]')
 let displayValue = ''
 let state = false
+  
+//Клики
 
 buttons.addEventListener('click', (e) => {
-  let newText = e.target.innerText;
+
+  const newText = e.target.innerText;
+  mainLogic(newText) })
+
+  
+//Кнопки
+
+document.addEventListener("keydown", (e) => {
+
+  const key = e.key;
+
+  if (!isNaN(key)) mainLogic(key);
+  if (['+', '-', '*', '/'].includes(key)) mainLogic(key);
+  if (key === "=") mainLogic('=');
+  if (key === "Backspace") mainLogic('AC');
+
+});
+
+
+
+//Логика
+
+function mainLogic(newText) {
+
   let lastChar = displayValue[displayValue.length - 1]
 
 
@@ -22,8 +45,7 @@ buttons.addEventListener('click', (e) => {
     display.value = displayValue
   }
 
-  else if (
-    !isNaN(Number(lastChar)) &&
+  else if (!isNaN(Number(lastChar)) &&
       ( newText === '+' ||
         newText === '-' ||
         newText === '*' ||
@@ -58,7 +80,7 @@ buttons.addEventListener('click', (e) => {
     state = false
   }
 
-})
+}
 
 
 
