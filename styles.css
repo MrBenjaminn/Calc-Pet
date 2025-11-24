@@ -22,8 +22,8 @@ input {
 
 .calculator-container {
   height: 70vh;
-  width: 25vw;
-  border-radius: 30px;
+  width: 27vw;
+  border-radius: 20px;
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: repeat(5, 20%);
@@ -89,5 +89,4 @@ button:hover {
 .min {
   grid-column: 4 / 5;
   grid-row: 5 / 6;
-
 }
