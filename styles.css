@@ -13,36 +13,34 @@ input:focus {
 }
 
 input {
-  font-size: 64px;
+  font-size: 68px;
   color: white;
   text-align: right;
   padding: 12px;
   cursor: pointer;
+  grid-column: 1 / 5;
+  border-radius: 30px;
+  background-color: rgb(138, 154, 139);
+  border: solid 6px coral;
 }
 
 .calculator-container {
   height: 70vh;
   width: 27vw;
-  border-radius: 20px;
+  border-radius: 35px;
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: repeat(5, 20%);
   background-color: coral;
-  border: solid 4px #bdd3da;
-  box-shadow:
-    -6px -6px 25px rgba(229, 250, 248, 0.5),
-    22px 2px 92px rgba(0, 0, 0, 0.35);
+  border: solid 6px #c8dfe7;
+  box-shadow: -6px -6px 25px rgba(229, 210, 228, 0.5),
+  22px 2px 92px rgba(0, 0, 0, 0.35);
   position: absolute;
-  cursor:pointer;
+  cursor: pointer;
   transition: transform 0.3s ease;
+  padding: 6px;
 }
 
-.display {
-  grid-column: 1 / 5;
-  border-radius: 30px;
-  border: none;
-  background-color: coral;
-}
 
 .min {
   grid-column: 4 / 5;
