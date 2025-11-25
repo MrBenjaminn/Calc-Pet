@@ -1,26 +1,34 @@
 const buttons = document.querySelector('[data-js-container]')
 const display = document.querySelector('[data-js-display]')
-let displayValue = ''
+let displayValue = '0'
 let state = false
-  
+// let dragMoved = false;
+display.value = displayValue
 //Клики
 
+
+
 buttons.addEventListener('click', (e) => {
+  // if (dragMoved) return;
+
+  e.target.classList.add('pressed');
+  setTimeout(() => e.target.classList.remove('pressed'), 150);
 
   const newText = e.target.innerText;
   mainLogic(newText) })
 
-  
+
+
 //Кнопки
 
 document.addEventListener("keydown", (e) => {
 
   const key = e.key;
 
-  if (!isNaN(key)) mainLogic(key);
-  if (['+', '-', '*', '/'].includes(key)) mainLogic(key);
-  if (key === "=") mainLogic('=');
-  if (key === "Backspace") mainLogic('AC');
+  if (!isNaN(Number(key))) mainLogic(key);
+  else if (['+', '-', '*', '/'].includes(key)) mainLogic(key);
+  else if (key === "=") mainLogic('=');
+  else if (key === "Backspace") mainLogic('AC');
 
 });
 
@@ -32,96 +40,78 @@ function mainLogic(newText) {
 
   let lastChar = displayValue[displayValue.length - 1]
 
-
-  if (state === false && !isNaN(Number(newText)))  {
-    displayValue += newText
-    display.value = displayValue
+  if (state === true && !isNaN(Number(newText))) {
+    displayValue = '' + newText
     state = false
+    display.textContent  = displayValue
+    return;
   }
 
-  else if (['+', '-', '*', '/'].includes(lastChar) &&
-    ['+', '-', '*', '/'].includes(newText)) {
+
+  else if (!isNaN(Number(newText)) && Number(displayValue) !== 0 ||
+            !isNaN(Number(newText)) && lastChar === '.') {
+    displayValue += newText
+    state = false
+    display.textContent  = displayValue
+    return;
+  }
+
+  else if (['+', '-', '*', '/', '.'].includes(lastChar) &&
+    ['+', '-', '*', '/', '.'].includes(newText)) {
     displayValue = String(displayValue.slice(0, displayValue.length - 1)) + newText
-    display.value = displayValue
+    display.textContent  = displayValue
+    return;
+  }
+
+  else if (newText === '<' && displayValue.length > 1) {
+    displayValue = displayValue.slice(0, displayValue.length - 1)
+    display.textContent = displayValue
+    return;
+  }
+
+  else if (newText === '<' && displayValue.length === 1) {
+    displayValue = '0'
+    display.textContent = displayValue
+    return;
   }
 
   else if (!isNaN(Number(lastChar)) &&
       ( newText === '+' ||
         newText === '-' ||
         newText === '*' ||
-        newText === '/')) {
+        newText === '/' ||
+        newText === '.')) {
     displayValue += newText
-    display.value = displayValue
     state = false
+    display.textContent  = displayValue
+    return;
   }
 
   else if (newText === 'AC') {
-    displayValue = ''
-    display.value = displayValue
+    displayValue = '0'
     state = false
+    display.textContent  = displayValue
+    return;
   }
 
   else if (
     !isNaN(Number(lastChar)) && newText === '=') {
     displayValue = String(eval(displayValue))
-    display.value = displayValue
     state = true
+    display.textContent  = displayValue
+    return;
     }
 
   else if (['+', '-', '*', '/'].includes(lastChar) && newText === '=') {
     displayValue = String(eval(displayValue.slice(0, displayValue.length - 1)))
-    display.value = displayValue
     state = true
+    display.textContent  = displayValue
+    return;
   }
 
-  else if (state === true && !isNaN(Number(newText))) {
-  displayValue = '' + newText
-  display.value = displayValue
-    state = false
+  if (!isNaN(Number(newText)) && Number(displayValue) === 0 && lastChar !== '.')  {
+    displayValue = newText
+    display.textContent  = displayValue
   }
 
 }
-
-
-
-
-
-// Анимация
-
-const centerX = window.innerWidth / 2 - buttons.offsetWidth / 2;
-const centerY = window.innerHeight / 2 - buttons.offsetHeight / 2;
-
-buttons.style.left = `${centerX}px`;
-buttons.style.top = `${centerY}px`;
-
-buttons.style.position = 'absolute';
-buttons.style.transition = 'transform 0.3s ease';
-
-let isDragging = false;
-let startX = 0;
-let startY = 0;
-
-buttons.addEventListener('mousedown', (e) => {
-  isDragging = true;
-  startX = e.clientX;
-  startY = e.clientY;
-  buttons.style.transition = 'none';
-});
-
-document.addEventListener('mousemove', (e) => {
-  if (!isDragging) return;
-
-  const dx = e.clientX - startX;
-  const dy = e.clientY - startY;
-
-  buttons.style.transform = `translate(${dx}px, ${dy}px)`;
-});
-
-document.addEventListener('mouseup', () => {
-  if (!isDragging) return;
-  isDragging = false;
-
-
-  buttons.style.transition = 'transform 0.3s ease';
-  buttons.style.transform = 'translate(0, 0)';
-});
